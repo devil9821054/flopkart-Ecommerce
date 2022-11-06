@@ -1,0 +1,39 @@
+.btn,
+.jumbotron,
+.nav :hover {
+  border-radius: 0px;
+}
+
+body {
+  background: #343a40;
+}
+
+footer{
+  position:absolute;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+
+}
+.btn-success
+{
+   position: relative;
+   margin-top: 10px;
+   border-radius: 5px;
+ 
+  
+}
+
+.menu-link{
+  color: #198754;
+  font-weight: 700;
+
+}
+
+.menu-link:hover{
+  color: white;
+  font-weight: 700;
+  
+}
+
+
