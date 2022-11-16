@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import Base from "../core/Base";
 import {Link} from "react-router-dom";
-import { singup } from "../auth/helper";
+import { signup } from "../auth/helper";
 
 
 
@@ -19,17 +19,19 @@ const Signup = () =>{
 
    const {name , email, password , error, success} =  values;
 
+
    const handleChange = name => event => {
-    setValues({name:event.target.value})
-   }
+    //setAllValues({...allValues, [e.target.name]: e.target.value}) ===>>>>stack overflow..
+    setValues({...values , error:false , [name]: event.target.value})
+   } 
 
 
 
 
-    const onSubmit = event =>{
+  const onSubmit = event =>{
     event.preventDefault();
     setValues({...values , error:false})
-    singup({name , email, password })
+    signup({name , email, password })
       .then(data =>{
           if(data.error){
               setValues({...values , error: data.error , success: false})
@@ -50,6 +52,7 @@ const Signup = () =>{
 
 
 
+//form  only...
 
 
     const SignUpForm = () => {
@@ -60,8 +63,9 @@ const Signup = () =>{
                     <div className="form-group">
                         <label className="text-light">Name</label>
                         <input className="form-control "
-                         onChange = {handleChange(name)}
+                         onChange = {handleChange("name")}
                          type= "text"
+                         value = {name}
                         
                          />
                     </div>
@@ -69,16 +73,20 @@ const Signup = () =>{
                     <div className="form-group">
                         <label className="text-light">email</label>
                         <input className="form-control"
-                         onChange = {handleChange(email)}
+                         onChange = {handleChange("email")}
                         type= "email"
+                        value = {email}
+
                        
                         />
                     </div>
                     <div className="form-group">
                         <label className="text-light">Password</label>
                         <input className="form-control" 
-                         onChange = {handleChange(password)}
+                         onChange = {handleChange("password")}
                         type= "password"
+                        value = {password}
+
                         
                         />
                     </div>
@@ -94,11 +102,48 @@ const Signup = () =>{
     };
 
 
+  const sucessMessage = () =>{
+   return( 
+    <div className="row">
+              <div className="col-md-6 offset-sm-3 text-left">
+   <div className="alert alert-success"
+     style={{display: success ? "" : "none"}}
+    >
+
+        New account was created succesfully. Please
+        <Link to = "/signin"> Login Here</Link>
+    </div>
+    </div>
+    </div>
+   );
+  }
+
+
+  const errorMessage = () =>{
+    return( 
+        <div className="row">
+              <div className="col-md-6 offset-sm-3 text-left">
+    <div className="alert alert-danger"
+     style={{display: error ? "" : "none"}}
+    >
+
+        {error}
+    </div>
+    </div>
+    </div>
+    );
+  }
+
+
+
+  
     return(
        <Base title="SignUp Page" description="A page for users to Sign up!!">
-      
+       {sucessMessage()}
+      {errorMessage()}
        {SignUpForm()}
-       <p className="text-white text-center"> {JSON.stringify(values)} </p>
+       
+      
        </Base> 
 
     )

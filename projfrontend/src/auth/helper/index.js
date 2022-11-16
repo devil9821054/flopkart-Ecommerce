@@ -1,9 +1,9 @@
-import { parse } from "query-string";
+//import { parse } from "query-string";
 import { API } from "../../backend";
 
-
-export const singup = user =>{
-    return fetch(`${API}/singup`,{
+//singup request..
+export const signup = user =>{
+    return fetch(`${API}/signup`,{
         method: "POST",
         headers: {
           Accept:"application/json",
@@ -12,14 +12,14 @@ export const singup = user =>{
         body:JSON.stringify(user)
     })
     .then(response =>{
-        return Response.json();
+        return response.json();
     })
     .catch(err => console.log(err))}
 
 
-    
-export const singin = user =>{
-    return fetch(`${API}/singin`,{
+   //singin request method..
+export const signin = user =>{
+    return fetch(`${API}/signin`,{
         method: "POST",
         headers: {
           Accept:"application/json",
@@ -28,12 +28,12 @@ export const singin = user =>{
         body:JSON.stringify(user)
     })
     .then(response =>{
-        return Response.json();
+        return response.json();
     })
     .catch(err => console.log(err))}
 
 
-
+//authenticate...
 export const authenticate = (data, next) => {
     if(typeof window !== "undefined"){
         localStorage.setItem("jwt" , JSON.stringify(data))
@@ -41,17 +41,17 @@ export const authenticate = (data, next) => {
     }
 }    
 
-
-export const singout = next =>{
+//singout..
+export const signout = next =>{
     if(typeof window !== "undefined"){
         localStorage.removeItem("jwt")
         next();
     }
-    return fetch(`${API}/singin`,{
+    return fetch(`${API}/signout`,{
          method: "GET"
     })
 
-    .then(response => console.log("singout succesfull"))
+    .then(response => console.log("signout succesfull"))
     .catch(err => console.log(err))
 }
 
